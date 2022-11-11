@@ -35,6 +35,7 @@ public class HodImpl implements HodInterfaces  {
 				System.out.println(message);
 			}else {
 				System.out.println(message);
+				
 			}
 			
 			
@@ -175,9 +176,10 @@ public class HodImpl implements HodInterfaces  {
 				String category = rSet.getString("category");
 				String Status = rSet.getString("Status");
 				String EngineerId = rSet.getString("EngineerId");
+				String EmployeeID = rSet.getString("EmployeeID");
 				
 				
-				Problem p = new Problem(complainid,ProblemName,category,Status,EngineerId);
+				Problem p = new Problem(complainid,ProblemName,category,Status,EngineerId,EmployeeID);
 				problems.add(p);
 				
 				
