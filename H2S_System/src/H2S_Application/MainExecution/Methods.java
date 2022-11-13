@@ -31,10 +31,10 @@ public class Methods {
 		 case 1 : {
 			
 			System.out.print("Enter your Email : ");
-			String Email = scanner.next();
+			String Email = scanner.nextLine();
 			
 			System.out.print("Enter your Password : ");
-			String password = scanner.next();
+			String password = scanner.nextLine();
 			
 			HodInterfaces apni = new HodImpl();
 			apni.HOD_Login(Email, password);
@@ -43,7 +43,7 @@ public class Methods {
 			while(true) {
 				
 				System.out.println("=================================================================");
-				System.out.println("LogOut : if you want to logout your account press : 00000");
+				System.out.println("LogOut : if you want to logout your account press : 0");
 				System.out.println("Registraion : If you want to Register an Engineer to your System Enter --->  1");
 				System.out.println("See Engineers : If you want to See all Engineers then Enter --->  2");
 				System.out.println("Delete Engineer : If you want to Delete Particular Engineers then Enter --->  3");
@@ -53,7 +53,7 @@ public class Methods {
 				
 				
 				
-				
+				scanner.nextLine();
 				int key = scanner.nextInt();
 				scanner.nextLine();
 				if(key==0) {
@@ -141,15 +141,16 @@ public class Methods {
             while(true) {
             	
             	System.out.println("==============================================");
+        		System.out.println("For LogOut : Press - 0");
             	System.out.println("For Login Another account press = 6");
-				System.out.println("For LogOut : Press - 0");
+		
 				System.out.println("for See Assigned problems : press -7");
 				System.out.println("for Update status : press - 8");
 				System.out.println("for see Attented problems : press - 9");
 				System.out.println("For change their password : press - 10");
 				System.out.println("==============================================");
 				
-				scanner.nextLine();
+				
 				int key = scanner.nextInt();
 				scanner.nextLine();
 				if(key==0) {
@@ -161,10 +162,10 @@ public class Methods {
 				  switch (key) {
 				    case 6:{
 				    	System.out.print("Enter your Email : ");
-						String Email = scanner.next();
+						String Email = scanner.nextLine();
 						
 						System.out.print("Enter your Password : ");
-						String password = scanner.next();
+						String password = scanner.nextLine();
 						
 						EngineersInterface apni = new EngineersImplementaion();
 						apni.LoginAsEngineer(Email, password);
@@ -183,13 +184,13 @@ public class Methods {
 					case 8: {
 						
 						System.out.print("Enter your EngineerId : ");
-						String engineerId = scanner.next();
+						String engineerId = scanner.nextLine();
 						
 						System.out.print("Enter your complainId : ");
 						int complainId = scanner.nextInt();
-						
+						scanner.nextLine();
 						System.out.print("Enter Status which you want to set : ");
-						String status = scanner.next();
+						String status = scanner.nextLine();
 						
 						EngineersInterface e1  = new EngineersImplementaion();
 						e1.UpdateStatus(status, complainId , engineerId);
@@ -211,11 +212,11 @@ public class Methods {
 					}
 					case 10: {
 						System.out.print("Enter your email whose password you want to change : ");
-						String email = scanner.next();
+						String email = scanner.nextLine();
 						System.out.print("Enter your Old Password : ");
-						String oldPasssword = scanner.next();
+						String oldPasssword = scanner.nextLine();
 						System.out.print("Enter your New password : ");
-						String newPassword = scanner.next();
+						String newPassword = scanner.nextLine();
 						
 						EngineersInterface e1 = new EngineersImplementaion();
 						e1.ChangePassword(email, oldPasssword, newPassword);
@@ -245,10 +246,10 @@ public class Methods {
             	System.out.println("For Login  account press = 12");
             	System.out.println("For Raise problem or complain press = 13");
             	System.out.println("For Problem Status press = 14");
-				
+            	System.out.println("Check complain History press = 15");
+            	System.out.println("Change your password = 16");
 				System.out.println("==============================================");
 				
-				scanner.nextLine();
 				int key = scanner.nextInt();
 				scanner.nextLine();
 				if(key==0) {
@@ -280,10 +281,10 @@ public class Methods {
 					case 12: {
 						
 						System.out.print("Enter your Email : ");
-						String Email = scanner.next();
+						String Email = scanner.nextLine();
 						
 						System.out.print("Enter your Password : ");
-						String password = scanner.next();
+						String password = scanner.nextLine();
 						
 						EmployeeInterface apni = new EmployeeImplementation();
 						apni.LiginAsEmployee(Email, password);
@@ -326,21 +327,30 @@ public class Methods {
 						break;
 						
 					}
-					case 16: {
-						System.out.print("Enter your email whose password you want to change : ");
-						String email = scanner.next();
-						System.out.print("Enter your Old Password : ");
-						String oldPasssword = scanner.next();
-						System.out.print("Enter your New password : ");
-						String newPassword = scanner.next();
+					case 15: {
+						System.out.println("Enter your EmployeeID :");
+						String employeeID = scanner.nextLine();
 						
-						EngineersInterface e1 = new EngineersImplementaion();
-						e1.ChangePassword(email, oldPasssword, newPassword);
+						EmployeeInterface e = new EmployeeImplementation();
+						List<Problem> lstList=e.ComplainHistory(employeeID);
+						lstList.forEach(s->System.out.println(s));
 						
 						
 						break;
 						
 						
+					}
+					case 16: {
+						System.out.print("Enter your email whose password you want to change : ");
+						String email = scanner.nextLine();
+						System.out.print("Enter your Old Password : ");
+						String oldPasssword = scanner.nextLine();
+						System.out.print("Enter your New password : ");
+						String newPassword = scanner.nextLine();
+						
+						EmployeeInterface e1 = new EmployeeImplementation();
+						e1.changePassword(email,oldPasssword,newPassword);
+					    break;
 					}
 					default:
 						throw new IllegalArgumentException("Unexpected value: " + key);

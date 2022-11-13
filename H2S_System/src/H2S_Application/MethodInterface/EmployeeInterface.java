@@ -2,6 +2,7 @@ package H2S_Application.MethodInterface;
 
 import java.util.List;
 
+import H2S_Application.ModelClasses.Employee;
 import H2S_Application.ModelClasses.Problem;
 
 public interface EmployeeInterface {
@@ -17,6 +18,14 @@ public interface EmployeeInterface {
 	
 	
 	public String checkStatus(int complainId,String employeeID);
+	
+	
+	public List<Problem> ComplainHistory(String employeeID);
+	
+	
+	public String changePassword(String Username, String oldPassword,String newpassword);
+		
+	
 		
 	
 	

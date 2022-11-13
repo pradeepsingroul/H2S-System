@@ -102,23 +102,25 @@ public class EngineersImplementaion implements EngineersInterface{
 				
 				PreparedStatement pk = connect.prepareStatement("select * from problems where complainId = '"+complainId+"' ");
 				ResultSet resultSet  = pk.executeQuery();
-				System.out.println(resultSet.next());
+				while(resultSet.next()) {
+					int AtcomplainId = resultSet.getInt("complainId");
+					String Atproblem = resultSet.getString("problem");
+					String Atcategory = resultSet.getString("category");
+					String Atstatus = resultSet.getString("status");
+					String AtengineerId = resultSet.getString("engineerId");
+					
+					PreparedStatement Attend = connect.prepareStatement("insert into attendedProblem values(?,?,?,?,?)");
+					
+					Attend.setInt(1, AtcomplainId);
+					Attend.setString(2, Atproblem);
+					Attend.setString(3, Atcategory);
+					Attend.setString(4, Atstatus);
+					Attend.setString(5, AtengineerId);
+					Attend.executeUpdate();
+					
+				}
 				
 				
-				int AtcomplainId = resultSet.getInt("complainId");
-				String Atproblem = resultSet.getString("problem");
-				String Atcategory = resultSet.getString("category");
-				String Atstatus = resultSet.getString("status");
-				String AtengineerId = resultSet.getString("engineerId");
-				
-				PreparedStatement Attend = connect.prepareStatement("insert into attendedProblem values(?,?,?,?,?)");
-				
-				Attend.setInt(1, AtcomplainId);
-				Attend.setString(2, Atproblem);
-				Attend.setString(3, Atcategory);
-				Attend.setString(4, Atstatus);
-				Attend.setString(5, AtengineerId);
-				Attend.executeUpdate();
 				
 				
 				meString = "Status upadated for "+ complainId+ "Problem";
@@ -196,6 +198,8 @@ public class EngineersImplementaion implements EngineersInterface{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		

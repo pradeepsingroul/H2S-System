@@ -3,6 +3,7 @@ package H2S_Application.MethodImplementation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntBinaryOperator;
 
@@ -10,6 +11,7 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.Insert;
 
 import H2S_Application.Dao_Uility.connection__;
 import H2S_Application.MethodInterface.EmployeeInterface;
+import H2S_Application.ModelClasses.Employee;
 import H2S_Application.ModelClasses.Problem;
 
 public class EmployeeImplementation implements EmployeeInterface{
@@ -147,6 +149,75 @@ public class EmployeeImplementation implements EmployeeInterface{
 		
 		
 		return message;
+	}
+
+	@Override
+	public List<Problem> ComplainHistory(String employeeID) {
+		
+		List <Problem> lstEmployees = new ArrayList<>();
+		
+		try(Connection connection = connection__.provideConnection()) {
+			
+			
+			PreparedStatement pt = connection.prepareStatement("select * from problems where EmployeeID = ?");
+			pt.setString(1, employeeID);
+			ResultSet rSet = pt.executeQuery();
+			
+			while(rSet.next()) {
+				
+				int complainId = rSet.getInt("ComplainID");
+				String problem = rSet.getString("Problem");
+				String Category = rSet.getString("Category");
+				String Status = rSet.getString("Status");
+				String EngineerId = rSet.getString("EngineerId");
+				String EmployeeId = rSet.getString("EmployeeId");
+				
+				
+				Problem p = new Problem(complainId,problem,Category,Status,EngineerId,EmployeeId);
+				lstEmployees.add(p);	
+			}
+			if(!rSet.next()) {
+				System.out.println("You didn't raise any problem till now");
+			}
+			
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return lstEmployees;
+	}
+
+	@Override
+	public String changePassword(String Email, String oldPassword, String newPassword) {
+String messaString = "";
+		
+		try(Connection connn = connection__.provideConnection()) {
+			
+			PreparedStatement pt = connn.prepareStatement("update employees set password = ? where username = ? AND password = ?");
+			pt.setString(1, newPassword);
+			pt.setString(2, Email);
+			pt.setString(3, oldPassword);
+			
+			int x = pt.executeUpdate();
+			if(x>0) {
+				messaString = "Successfully Password changed";
+				System.out.println(messaString);
+			}else {
+				messaString = "You have entered somethink wrong details";
+				System.out.println(messaString);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+		
+		return messaString;
 	}
 
 }
